@@ -1,0 +1,19 @@
+﻿@model List<Book>
+
+@{
+    ViewData["Title"] = "About";
+
+}
+<h1>@ViewData["About"]</h1>
+
+@foreach (var book in Model)
+{
+    <p>@book.Title | @book.Description</p>
+    <p>Tags:</p>
+    <ul>
+        @foreach (var tag in book.Tags)
+        {
+            <li>@tag</li>
+        }
+    </ul>
+}

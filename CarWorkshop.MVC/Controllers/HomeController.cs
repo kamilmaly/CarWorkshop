@@ -36,6 +36,27 @@ public class HomeController : Controller
         return View(model);
     }
 
+    public IActionResult About()
+    {
+        var model = new List<Book>()
+        {
+            new Book()
+            {
+                Title = "Harry Potter",
+                Description = "Adventure book",
+                Tags = new List<string>() {"England", "Adventure", "Book"}
+
+            },
+            new Book()
+            {
+                Title = "6 hours",
+                Description = "Action book",
+                Tags = new List<string>() {"Germany", "Action", "Book"}
+            }
+        };
+        return View(model);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
