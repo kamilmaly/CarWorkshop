@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CarWorkshop.Domain\CarWorkshop.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
