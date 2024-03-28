@@ -1,6 +1,6 @@
 ﻿@{
-    var action = ViewContext.RouteData.Values["Action"]!.ToString();
-    var controller = ViewContext.RouteData.Values["Controller"]!.ToString();
+    var action = ViewContext.RouteData.Values["Action"]?.ToString();
+    var controller = ViewContext.RouteData.Values["Controller"]?.ToString();
 }
 
 <!DOCTYPE html>
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CarWorkshop.MVC.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.css" />
 </head>
 <body>
     <header>
@@ -37,6 +38,7 @@
                             <a class="nav-link text-dark @(controller=="CarWorkshop" && action=="Index" ? "active" : "")" asp-area="" asp-controller="CarWorkshop" asp-action="Index">Car Workshops</a>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -54,6 +56,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
