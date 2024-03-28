@@ -1,5 +1,7 @@
-﻿using CarWorkshop.Application.CarWorkshop;
-using CarWorkshop.Application.CarWorkshop.CreateCarWorkshop;
+﻿using AutoMapper;
+using CarWorkshop.Application.CarWorkshop;
+using CarWorkshop.Application.CarWorkshop.Commands.CreateCarWorkshop;
+using CarWorkshop.Application.CarWorkshop.Commands.EditCarWorkshop;
 using CarWorkshop.Application.CarWorkshop.Queries.GetAllCarWorkshops;
 using CarWorkshop.Application.CarWorkshop.Queries.GetCarWorkshopByEncodedName;
 using MediatR;
@@ -10,10 +12,12 @@ namespace CarWorkshop.MVC.Controllers
     public class CarWorkshopController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public CarWorkshopController(IMediator mediator) 
+        public CarWorkshopController(IMediator mediator, IMapper mapper) 
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -34,6 +38,27 @@ namespace CarWorkshop.MVC.Controllers
             return View(carWorkshop);
         }
 
+        [Route("CarWorkshop/{encodedName}/Edit")]
+        public async Task<IActionResult> Edit(string encodedName)
+        {
+            var carWorkshop = await _mediator.Send(new GetCarWorkshopByEncodedNameQuery(encodedName));
+
+            EditCarWorkshopCommand model = _mapper.Map<EditCarWorkshopCommand>(carWorkshop);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("CarWorkshop/{encodedName}/Edit")]
+        public async Task<IActionResult> Edit(string encodedName, EditCarWorkshopCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(command);
+            }
+            await _mediator.Send(command);
+            return RedirectToAction(nameof(Index));
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateCarWorkshopCommand command)
@@ -43,7 +68,7 @@ namespace CarWorkshop.MVC.Controllers
                 return View(command);
             }
             await _mediator.Send(command);
-            return RedirectToAction(nameof(Index)); //TODO: refactor
+            return RedirectToAction(nameof(Index));
         }
     }
 }

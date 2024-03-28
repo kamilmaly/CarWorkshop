@@ -1,4 +1,4 @@
-﻿using CarWorkshop.Application.CarWorkshop.CreateCarWorkshop;
+﻿using CarWorkshop.Application.CarWorkshop.Commands.CreateCarWorkshop;
 using CarWorkshop.Application.Mappings;
 using FluentValidation;
 using FluentValidation.AspNetCore;
