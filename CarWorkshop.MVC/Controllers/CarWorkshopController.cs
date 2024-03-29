@@ -50,6 +50,11 @@ namespace CarWorkshop.MVC.Controllers
         {
             var carWorkshop = await _mediator.Send(new GetCarWorkshopByEncodedNameQuery(encodedName));
 
+            if(!carWorkshop.IsEditable)
+            {
+                return RedirectToAction("NoAccess", "Home");
+            }
+
             EditCarWorkshopCommand model = _mapper.Map<EditCarWorkshopCommand>(carWorkshop);
             return View(model);
         }
