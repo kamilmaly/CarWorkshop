@@ -27,14 +27,17 @@ namespace CarWorkshop.MVC.Controllers
             return View(carWorkshops);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Owner")]
         public IActionResult Create() 
         {
             //if(User.Identity == null || !User.Identity.IsAuthenticated)
             //{
             //    return RedirectToPage("/Account/Login", new { area = "Identity" });
             //}
-
+            //if (!User.IsInRole("Owner"))
+            //{
+            //    return RedirectToAction("NoAccess", "Home");
+            //}
             return View();
         }
 
@@ -73,7 +76,7 @@ namespace CarWorkshop.MVC.Controllers
 
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Owner")]
         public async Task<IActionResult> Create(CreateCarWorkshopCommand command)
         {
             if (!ModelState.IsValid)
