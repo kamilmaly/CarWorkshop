@@ -1,11 +1,11 @@
-﻿@model CarWorkshop.Application.CarWorkshop.Commands.EditCarWorkshop.EditCarWorkshopCommand
+﻿﻿@using CarWorkshop.Application.CarWorkshopService.Commands;
+@model CarWorkshop.Application.CarWorkshop.Commands.EditCarWorkshop.EditCarWorkshopCommand
 
 @{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Edit @Model.Name</h1>
-
 
 <hr />
 <div class="row">
@@ -49,10 +49,22 @@
     </div>
 </div>
 
-<div>
+
+
+
+<div class="m-3">
+    <partial name="_CreateCarWorkshopService" model="new CreateCarWorkshopServiceCommand() { CarWorkshopEncodedName = Model.EncodedName }" />
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
 
+<h3>Services:</h3>
+
+<div id="services" class="row" data-encoded-name="@Model.EncodedName"></div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/CarWorkshop/Edit.js"></script>
 }
